@@ -5,7 +5,7 @@ export const Person = props => {
   return (
     <div>
       <p>Name: {props.name}</p>
-      <p>Cat's Name: {props.cat.name}</p>
+      <p>Cat: {props.cat.name}</p>
     </div>
   )
 }
@@ -13,9 +13,13 @@ export const Person = props => {
 /**
  * Regular ol' Component.
  */
-export class PersonComponent extends Component {
+export class PersonComponentSCUchildren extends Component {
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(nextProps, this.props)
+  }
+
   render() {
-    console.log('PersonComponent Updating')
+    console.log('PersonComponentSCU (all) Updating')
     return (
       <div>
         <Person {...this.props} />
@@ -24,6 +28,36 @@ export class PersonComponent extends Component {
     )
   }
 }
+
+
+/**
+ * Implements shouldComponentUpdate w/Lodash's equality, without children
+ */
+export class PersonComponentSCU extends Component {
+  shouldComponentUpdate(nextProps) {
+    // for (var n in nextProps) {
+    //   if (!_.isEqual(nextProps[n], this.props[n])) {
+    //     console.log(n)
+    //   }
+    // }
+    // return !_.isEqual(nextProps, this.props)
+    return !_.isEqual(
+      _.pick(nextProps, ['name', 'cat']),
+      _.pick(this.props, ['name', 'cat']),
+    )
+  }
+
+  render() {
+    console.log('PersonComponentSCU (name/cat) Updating')
+    return (
+      <div>
+        <Person {...this.props} />
+        {this.props.children}
+      </div>
+    )
+  }
+}
+
 
 /**
  * Person component but extending PureComponent
@@ -41,34 +75,6 @@ export class PurePersonComponent extends PureComponent {
 export class PurePersonComponentChildren extends PureComponent {
   render() {
     console.log('PurePersonComponent W/Children Updating')
-    return (
-      <div>
-        <Person {...this.props} />
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
-/**
- * Implements shouldComponentUpdate w/Lodash's equality
- */
-export class PersonComponentSCU extends Component {
-  shouldComponentUpdate(nextProps) {
-    for (var n in nextProps) {
-      if (!_.isEqual(nextProps[n], this.props[n])) {
-        console.log(n)
-      }
-    }
-    return !_.isEqual(nextProps, this.props)
-    // return !_.isEqual(
-    //   _.pick(nextProps, ['name', 'cat']),
-    //   _.pick(this.props, ['name', 'cat']),
-    // )
-  }
-
-  render() {
-    console.log('PersonComponentSCU Updating')
     return (
       <div>
         <Person {...this.props} />

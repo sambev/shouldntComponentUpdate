@@ -4,7 +4,7 @@ import {
   PersonForm,
   PurePersonComponent,
   PurePersonComponentChildren,
-  PersonComponent,
+  PersonComponentSCUchildren,
   PersonComponentSCU,
 } from './Person'
 
@@ -46,7 +46,19 @@ export class App extends React.Component {
     })
   }
 
+  styles() {
+    return {
+      personRow: {
+        display: 'flex'
+      },
+      personWrapper: {
+        width: '50%'
+      },
+    }
+  }
+
   render() {
+    const styles = this.styles()
     return (
       <div>
         <h1>Shouldn't component update?</h1>
@@ -55,24 +67,34 @@ export class App extends React.Component {
           handleCatUpdate={this.updateCatName.bind(this)}
           handleDogUpdate={this.updateDogName.bind(this)}
         />
-        <div>
-          <h4>Component:</h4>
-          <PersonComponent name={this.state.name} cat={this.state.cat}>
-            <Dog name={this.state.dog.name} />
-          </PersonComponent>
-          <h4>Should Component Update</h4>
-          <PersonComponentSCU name={this.state.name} cat={this.state.cat}>
-            <Dog name={this.state.dog.name} />
-          </PersonComponentSCU>
-          <h4>Pure Component (no children)</h4>
-          <PurePersonComponent name={this.state.name} cat={this.state.cat} />
-          <h4>Pure Component (children)</h4>
-          <PurePersonComponentChildren
-            name={this.state.name}
-            cat={this.state.cat}
-          >
-            <Dog name={this.state.dog.name} />
-          </PurePersonComponentChildren>
+        <div style={styles.personRow}>
+          <div style={styles.personWrapper}>
+            <h4>Should Component Update (all):</h4>
+            <PersonComponentSCUchildren name={this.state.name} cat={this.state.cat}>
+              <Dog name={this.state.dog.name} />
+            </PersonComponentSCUchildren>
+          </div>
+          <div style={styles.personWrapper}>
+            <h4>Should Component Update (name/cat)</h4>
+            <PersonComponentSCU name={this.state.name} cat={this.state.cat}>
+              <Dog name={this.state.dog.name} />
+            </PersonComponentSCU>
+          </div>
+        </div>
+        <div style={styles.personRow}>
+          <div style={styles.personWrapper}>
+            <h4>Pure Component (no children)</h4>
+            <PurePersonComponent name={this.state.name} cat={this.state.cat} />
+          </div>
+          <div style={styles.personWrapper}>
+            <h4>Pure Component (children)</h4>
+            <PurePersonComponentChildren
+              name={this.state.name}
+              cat={this.state.cat}
+            >
+              <Dog name={this.state.dog.name} />
+            </PurePersonComponentChildren>
+          </div>
         </div>
       </div>
     )
