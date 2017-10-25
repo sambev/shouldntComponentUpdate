@@ -1,17 +1,19 @@
 import React from 'react'
 
 import {
-  PersonForm,
   PurePersonComponent,
   PurePersonComponentChildren,
   PersonComponentSCUchildren,
   PersonComponentSCU,
 } from './Person'
 
+import { PersonForm } from './PersonForm'
+
 import { Dog } from './Dog'
 
-const Me = {}
-
+/**
+ * Entire app
+ */
 export class App extends React.Component {
   constructor(props) {
     super(props)
@@ -49,10 +51,10 @@ export class App extends React.Component {
   styles() {
     return {
       personRow: {
-        display: 'flex'
+        display: 'flex',
       },
       personWrapper: {
-        width: '50%'
+        width: '50%',
       },
     }
   }
@@ -61,7 +63,7 @@ export class App extends React.Component {
     const styles = this.styles()
     return (
       <div>
-        <h1>Shouldn't component update?</h1>
+        <h1>Shouldn't Component Update?</h1>
         <PersonForm
           handleNameUpdate={this.updatePersonName.bind(this)}
           handleCatUpdate={this.updateCatName.bind(this)}
@@ -69,13 +71,28 @@ export class App extends React.Component {
         />
         <div style={styles.personRow}>
           <div style={styles.personWrapper}>
-            <h4>Should Component Update (all):</h4>
-            <PersonComponentSCUchildren name={this.state.name} cat={this.state.cat}>
+            <h4>Should Component Update:</h4>
+            <pre>{`
+
+!_.isEqual(nextProps, this.props)
+
+
+            `}</pre>
+            <PersonComponentSCUchildren
+              name={this.state.name}
+              cat={this.state.cat}
+            >
               <Dog name={this.state.dog.name} />
             </PersonComponentSCUchildren>
           </div>
           <div style={styles.personWrapper}>
-            <h4>Should Component Update (name/cat)</h4>
+            <h4>Should Component Update</h4>
+            <pre>{`
+!_.isEqual(
+  _.pick(nextProps, ['name', 'cat']),
+  _.pick(this.props, ['name', 'cat']),
+)
+            `}</pre>
             <PersonComponentSCU name={this.state.name} cat={this.state.cat}>
               <Dog name={this.state.dog.name} />
             </PersonComponentSCU>

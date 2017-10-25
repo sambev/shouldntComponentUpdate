@@ -19,7 +19,7 @@ export class PersonComponentSCUchildren extends Component {
   }
 
   render() {
-    console.log('PersonComponentSCU (all) Updating')
+    console.log('shouldComponentUpdate   ---- (ALL props)')
     return (
       <div>
         <Person {...this.props} />
@@ -29,18 +29,11 @@ export class PersonComponentSCUchildren extends Component {
   }
 }
 
-
 /**
  * Implements shouldComponentUpdate w/Lodash's equality, without children
  */
 export class PersonComponentSCU extends Component {
   shouldComponentUpdate(nextProps) {
-    // for (var n in nextProps) {
-    //   if (!_.isEqual(nextProps[n], this.props[n])) {
-    //     console.log(n)
-    //   }
-    // }
-    // return !_.isEqual(nextProps, this.props)
     return !_.isEqual(
       _.pick(nextProps, ['name', 'cat']),
       _.pick(this.props, ['name', 'cat']),
@@ -48,7 +41,7 @@ export class PersonComponentSCU extends Component {
   }
 
   render() {
-    console.log('PersonComponentSCU (name/cat) Updating')
+    console.log('shouldComponentUpdate   ---- (name/cat props)')
     return (
       <div>
         <Person {...this.props} />
@@ -58,13 +51,12 @@ export class PersonComponentSCU extends Component {
   }
 }
 
-
 /**
  * Person component but extending PureComponent
  */
 export class PurePersonComponent extends PureComponent {
   render() {
-    console.log('PurePersonComponent No Children Updating')
+    console.log('PureComponent           ---- No Children')
     return <Person {...this.props} />
   }
 }
@@ -74,67 +66,11 @@ export class PurePersonComponent extends PureComponent {
  */
 export class PurePersonComponentChildren extends PureComponent {
   render() {
-    console.log('PurePersonComponent W/Children Updating')
+    console.log('PureComponent           ---- With Children')
     return (
       <div>
         <Person {...this.props} />
         {this.props.children}
-      </div>
-    )
-  }
-}
-
-/**
- * The Person Form
- */
-export class PersonForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      name: '',
-      cat: '',
-      dog: '',
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
-          value={this.state.name}
-          onChange={ev => {
-            this.setState({ name: ev.target.value })
-          }}
-        />
-        <button onClick={() => this.props.handleNameUpdate(this.state.name)}>
-          Save!
-        </button>
-        <br />
-        <label>Cat's Name:</label>
-        <input
-          type="text"
-          value={this.state.cat}
-          onChange={ev => {
-            this.setState({ cat: ev.target.value })
-          }}
-        />
-        <button onClick={() => this.props.handleCatUpdate(this.state.cat)}>
-          Save!
-        </button>
-        <br />
-        <label>Dogs's Name:</label>
-        <input
-          type="text"
-          value={this.state.dog}
-          onChange={ev => {
-            this.setState({ dog: ev.target.value })
-          }}
-        />
-        <button onClick={() => this.props.handleDogUpdate(this.state.dog)}>
-          Save!
-        </button>
       </div>
     )
   }
