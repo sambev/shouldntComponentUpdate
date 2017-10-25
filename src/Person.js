@@ -11,7 +11,8 @@ export const Person = props => {
 }
 
 /**
- * Regular ol' Component.
+ * Person that implements shouldComponentUpdate using lodash's
+ * isEqual on *all* props
  */
 export class PersonComponentSCUchildren extends Component {
   shouldComponentUpdate(nextProps) {
@@ -30,7 +31,8 @@ export class PersonComponentSCUchildren extends Component {
 }
 
 /**
- * Implements shouldComponentUpdate w/Lodash's equality, without children
+ * Person that implements shouldComponentUpdate using lodash's
+ * isEqual on *name* and *cat* only
  */
 export class PersonComponentSCU extends Component {
   shouldComponentUpdate(nextProps) {

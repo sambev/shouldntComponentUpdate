@@ -28,23 +28,31 @@ export class App extends React.Component {
     }
   }
 
+  /**
+   * Update the 'name' of the person
+   * @param  {string} name
+   */
   updatePersonName(name) {
     this.setState({ name })
   }
 
-  updateCatName(val) {
+  /**
+   * Update the Cat's name
+   * @param  {string} name
+   */
+  updateCatName(name) {
     this.setState({
-      cat: {
-        name: val,
-      },
+      cat: { name },
     })
   }
 
-  updateDogName(val) {
+  /**
+   * Update the Dog's name
+   * @param  {string} name
+   */
+  updateDogName(name) {
     this.setState({
-      dog: {
-        name: val,
-      },
+      dog: { name },
     })
   }
 
