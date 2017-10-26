@@ -4,8 +4,8 @@ import _ from 'lodash'
 export const Person = props => {
   return (
     <div>
-      <p>Name: {props.name}</p>
-      <p>Cat: {props.cat.name}</p>
+      <p>Name: {props.name} (string)</p>
+      <p>Cat: {props.cat.name} (object)</p>
     </div>
   )
 }
